@@ -1,16 +1,38 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link,NavLink } from 'react-router-dom'
 import { Outlet } from 'react-router-dom'
 import Header from './Header'
 import '../index.css'
 
 
 function HeaderHost(){
+  const myLink= 
+    {
+      fontWeight: 'bold',
+      textDecoration: 'underline',
+      color:' #161616'
+}
     return (
         <nav className='host-nav'>
-       <Link to='/host'>Dashboard</Link>
-       <Link to='/host/income'>Income</Link>
-       <Link to='/host/reviews'>Reviews</Link>
+       <NavLink 
+       to='/host'
+       style={({ isActive }) => (isActive ? myLink : null)}
+       >
+        Dashboard</NavLink>
+
+       <NavLink 
+       to='/host/income'
+       style={({ isActive }) => (isActive ? myLink : null)}
+       >
+        Income
+        </NavLink>
+
+       <NavLink 
+       to='/host/reviews'
+       style={({ isActive }) => (isActive ? myLink : null)}
+       >
+        Reviews
+        </NavLink>
         </nav>
     )
 }
