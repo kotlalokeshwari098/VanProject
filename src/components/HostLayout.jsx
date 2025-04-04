@@ -15,20 +15,28 @@ function HeaderHost(){
     return (
         <nav className='host-nav'>
        <NavLink 
-       to='/host'
-       style={({ isActive }) => (isActive ? myLink : null)}
+         to='/host'
+        //  or to='.' 
+         style={({ isActive }) => (isActive ? myLink : null)}
        >
         Dashboard</NavLink>
 
        <NavLink 
-       to='/host/income'
-       style={({ isActive }) => (isActive ? myLink : null)}
+         to='income'
+         style={({ isActive }) => (isActive ? myLink : null)}
        >
         Income
         </NavLink>
 
        <NavLink 
-       to='/host/reviews'
+       to='vans'
+       style={({ isActive }) => (isActive ? myLink : null)}
+       >
+        Vans
+        </NavLink>
+
+       <NavLink 
+       to='reviews'
        style={({ isActive }) => (isActive ? myLink : null)}
        >
         Reviews
