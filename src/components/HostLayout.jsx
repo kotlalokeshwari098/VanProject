@@ -17,6 +17,7 @@ function HeaderHost(){
        <NavLink 
          to='/host'
         //  or to='.' 
+        end
          style={({ isActive }) => (isActive ? myLink : null)}
        >
         Dashboard</NavLink>
