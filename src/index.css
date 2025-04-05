@@ -150,6 +150,14 @@ header a:hover {
   padding-inline: 23px
 }
 
+.van-list-filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.van-list-filter-buttons > a {
+  margin-right: 15px;
+}
 .van-list {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -198,7 +206,7 @@ header a:hover {
 }
 
 .van-type.selected {
-  color: #FFEAD0;
+  color:white;
 }
 
 .van-type.simple:hover, .van-type.simple.selected {
@@ -281,6 +289,7 @@ i[class*='van-type-'] {
   color: white;
   font-size: 1.125rem;
 }
+
 .my-link{
   font-weight:bold;
   text-decoration: underline;
