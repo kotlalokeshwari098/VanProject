@@ -17,7 +17,8 @@ function Van() {
 
     const hostList=vans.map(van=>(  
       <Link
-            to={`/host/vans/${van.id}`}
+            to={van.id}
+            // relative path
             key={van.id}
             className="host-van-link-wrapper"
         >

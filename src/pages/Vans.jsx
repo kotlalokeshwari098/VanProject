@@ -7,6 +7,7 @@ export default function Vans() {
     const [searchParams, setSearchParams] = useSearchParams();
     const typeFilter = searchParams.get('type')
     console.log(typeFilter)
+    console.log(searchParams.toString())
 
     const filteredItems = typeFilter
         ? vans.filter(item => item.type.toLowerCase() === typeFilter.toLowerCase())
@@ -22,7 +23,11 @@ export default function Vans() {
 
 
     const vanElements = filteredItems.map(van => (
-        <Link to={`/vans/${van.id}`}
+        <Link 
+           to={van.id}  
+           state={{search: `?${searchParams.toString()} `}}
+        // relative path
+        // {`/vans/${van.id}`} absolute path 
             aria-label=
             {`view details for ${van.name},priced at $${van.price} per day`}
         >
