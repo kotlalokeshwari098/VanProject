@@ -3,7 +3,7 @@ import './index.css'
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Home from '../src/pages/Home'
 import About from './pages/About'
-import Vans from './pages/Vans'
+import Vans,{loader as vansLoader }from './pages/Vans'
 import VanDetail from './pages/VanDetail';
 import './server'
 import Layout from './components/Layout';
@@ -17,46 +17,55 @@ import HostVanInfo from './pages/Host/HostVanInfo';
 import HostVanPricing from './pages/Host/HostVanPricing';
 import HostVanPhotos from './pages/Host/HostVanPhotos';
 import NotFound from './pages/NotFound';
+import { RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
+import Error from './components/Error';
 
 
-function Header() {
+const router = createBrowserRouter(createRoutesFromElements(
+  <Route 
+   path='/'
+   element={<Layout />}
+   errorElement={<Error />}
+  >
+    {/* apply this path for every page like in host also here path='' is not defined right*/}
+    {/* if we define path='/' then in next line use */}
+    <Route index element={<Home />}  />
+    <Route path='about' element={<About />} />
+
+    <Route 
+    path='vans' 
+    element={<Vans />} 
+    loader={vansLoader} />
+    <Route path='vans/:id' element={<VanDetail />} />
+
+
+
+    <Route path='host' element={<HostLayout />}>
+
+      <Route index element={<Dashboard />} />
+      <Route path='income' element={<Income />} />
+      <Route path='vans' element={<HostVan />} />
+      <Route path='vans/:id' element={<HostVanDetail />} >
+        <Route index element={<HostVanInfo />} />
+        <Route path='pricing' element={<HostVanPricing />} />
+        <Route path='photos' element={<HostVanPhotos />} />
+
+      </Route>
+      <Route path='reviews' element={<Reviews />} />
+    </Route>
+    <Route path='*' element={<NotFound />} />
+  </Route>
+))
+
+function App() {
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route element={<Layout />}>
-          {/* apply this path for every page like in host also here path='' is not defined right*/}
-          {/* if we define path='/' then in next line use */}
-            <Route path='/' element={<Home />} />
-            <Route path='about' element={<About />} />
-            
-            <Route path='vans' element={<Vans />} />
-            <Route path='vans/:id' element={<VanDetail />} />
-
-
-            
-          <Route path='host' element={<HostLayout />}>
-
-              <Route index element={<Dashboard />} />
-              <Route path='income' element={<Income />} />
-              <Route path='vans' element={<HostVan />} />
-              <Route path='vans/:id' element={<HostVanDetail />} >
-                 <Route index element={<HostVanInfo />} />
-                 <Route path='pricing' element={<HostVanPricing />}/>
-                 <Route path='photos' element={<HostVanPhotos />}/>
-               
-               </Route>
-              <Route path='reviews' element={<Reviews />} />
-            </Route>
-            <Route path='*' element={<NotFound />}/>
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <RouterProvider router={router} />
     </>
   )
 }
 createRoot(document.getElementById('root')).render(
 
-  <Header />
+  <App />
 
 )

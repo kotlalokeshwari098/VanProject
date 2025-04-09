@@ -1,18 +1,28 @@
 import React from 'react'
 import { useState,useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { fetching } from '../../Api';
 
 
 function Van() {
    const [vans,setVans]=useState([]);
+   const [loading,setLoading]=useState(false);
 
     useEffect(()=>{
-      fetch('/api/host/vans')
-      .then(resp => resp.json())
-      .then(data=>setVans(data.vans))
+      async function vans(){
+        setLoading(true)
+        const data= await fetching();
+         setVans(data);
+         setLoading(false)
+      }
       
+      vans();
     },[])
     console.log( vans)
+
+    if(loading){
+        return <h2>Loading...</h2>
+    }
 
 
     const hostList=vans.map(van=>(  

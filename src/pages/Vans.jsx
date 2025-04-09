@@ -1,26 +1,60 @@
 import { useEffect, useState } from "react"
 import '../index.css'
 import { Link, useSearchParams } from "react-router-dom"
+import { fetching } from '.././Api';
+import { useLoaderData } from "react-router-dom"
+
+export function loader(){
+    return fetching();
+}
+
 
 export default function Vans() {
-    const [vans, setVans] = useState([])
+    // const [vans, setVans] = useState([])
     const [searchParams, setSearchParams] = useSearchParams();
+    // const [loading,setLoading]=useState(false);
+    // const [error,setError]=useState(null);
+
+
+
+    const data=useLoaderData();
+    console.log(data);
+
     const typeFilter = searchParams.get('type')
-    console.log(typeFilter)
-    console.log(searchParams.toString())
+    // console.log(typeFilter)
+    // console.log(searchParams.toString())
 
     const filteredItems = typeFilter
-        ? vans.filter(item => item.type.toLowerCase() === typeFilter.toLowerCase())
-        : vans
-
-
+        ? data.filter(item => item.type.toLowerCase() === typeFilter.toLowerCase())
+        : data
+        /*
     useEffect(() => {
-        fetch('/api/vans')
-            .then(response => response.json())
-            .then(data => setVans(data.vans));
-    }, [])
-    // console.log(vans)
+        async function vans(){
+                setLoading(true)
+                try{
+                    const data= await fetching();
+                    setVans(data);
+                }
+                catch(err){
+                    setError(err);
+                }
+                finally{
+                    setLoading(false)
 
+                }
+        }
+        vans();
+    }, [])
+    */
+    // console.log(vans)
+    // no need of useeffect() ,loading states,vans state when we are using  loaders
+
+    // if(loading){
+    //     return <h1 aria-live="polite">Loading....</h1>
+    // }
+    // if(error){
+    //     return <h1 aria-live="assertive">There was an error:{error.message}</h1>
+    // }
 
     const vanElements = filteredItems.map(van => (
         <Link 

@@ -23,7 +23,7 @@ function VanDetail(prop) {
     // const search=location.state?.search || ''
     // or up-optional chaining
     const search=location.state && location.state.search ||''
-    let word=search.type ? search.split('=').pop() : 'all'
+    let word=search.type ? search.split('=').pop() : 'all '
 
     console.log(word)
   return (
