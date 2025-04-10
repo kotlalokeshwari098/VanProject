@@ -1,23 +1,31 @@
 import React, { useEffect, useState } from 'react'
 import '../index.css'
-import { useParams,Link,useLocation } from 'react-router-dom'
+import { useParams,Link,useLocation,useLoaderData } from 'react-router-dom'
+import { fetching } from '../Api';
 
+export function loader({params}){
+     console.log(params.id)
+     return fetching(params.id);
+}
 
+ 
 function VanDetail(prop) {
-    const [van,setVan]=useState();
-    const params=useParams(null)
-    console.log(params.id);
+    // const [van,setVan]=useState();
+    // const params=useParams(null)
+    const van=useLoaderData();
+    console.log(van)
 
     const location=useLocation();
     
-    console.log(location);
+    // console.log(location);
 
-
+/*
     useEffect(()=>{
       fetch(`/api/vans/${params.id}`)
         .then(res=>res.json())
         .then(data=>setVan(data.vans))
     },[params.id]) 
+    */
 
 
     // const search=location.state?.search || ''
@@ -28,7 +36,7 @@ function VanDetail(prop) {
     console.log(word)
   return (
     <div className="van-detail-container">
-    {van ? (
+    
         <div className="van-detail">
             <Link
         to={`..${search}`}
@@ -42,7 +50,7 @@ function VanDetail(prop) {
             <p>{van.description}</p>
             <button className="link-button">Rent this van</button>
         </div>
-    ) : <h2>Loading...</h2>}
+    
 </div>
   )
 }

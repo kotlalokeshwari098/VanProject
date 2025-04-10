@@ -1,28 +1,35 @@
 import React from 'react'
 import { useState,useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
 import { fetching } from '../../Api';
+
+export function loader(){
+    return fetching();
+}
+
 
 
 function Van() {
-   const [vans,setVans]=useState([]);
-   const [loading,setLoading]=useState(false);
+//    const [vans,setVans]=useState([]);
+//    const [loading,setLoading]=useState(false);
+const vans=useLoaderData()
+console.log(vans)
 
-    useEffect(()=>{
-      async function vans(){
-        setLoading(true)
-        const data= await fetching();
-         setVans(data);
-         setLoading(false)
-      }
+    // useEffect(()=>{
+    //   async function vans(){
+    //     setLoading(true)
+    //     const data= await fetching();
+    //      setVans(data);
+    //      setLoading(false)
+    //   }
       
-      vans();
-    },[])
+    //   vans();
+    // },[])
     console.log( vans)
 
-    if(loading){
-        return <h2>Loading...</h2>
-    }
+    // if(loading){
+    //     return <h2>Loading...</h2>
+    // }
 
 
     const hostList=vans.map(van=>(  
@@ -46,16 +53,7 @@ function Van() {
     <section>
             <h1 className="host-vans-title">Your listed vans</h1>
             <div className="host-vans-list">
-                {
-                    vans.length > 0 ? (
-                        <section>
-                            {hostList}
-                        </section>
-
-                    ) : (
-                            <h2>Loading...</h2>
-                        )
-                }
+            {hostList}
             </div>
         </section>
   )
