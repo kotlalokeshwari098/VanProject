@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useParams,Outlet, NavLink,Link, useLoaderData } from 'react-router-dom'
 import { fetching } from '../../Api';
+import { requireAuth } from '../../Utils';
 
-export function loader({params}){
+
+export async function loader({params}){
+    await requireAuth();
+
     return fetching(params.id);
 }
 

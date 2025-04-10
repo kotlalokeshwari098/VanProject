@@ -2,11 +2,12 @@ import React from 'react'
 import { useState,useEffect } from 'react';
 import { Link, useLoaderData } from 'react-router-dom';
 import { fetching } from '../../Api';
+import { requireAuth } from '../../Utils';
 
-export function loader(){
+export async function loader(){
+    await requireAuth();
     return fetching();
 }
-
 
 
 function Van() {

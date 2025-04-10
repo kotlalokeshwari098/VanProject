@@ -1,6 +1,7 @@
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { RouterProvider, createBrowserRouter, createRoutesFromElements, redirect } from 'react-router-dom';
 import Home from '../src/pages/Home'
 import About from './pages/About'
 import Vans,{loader as vansLoader }from './pages/Vans'
@@ -17,9 +18,10 @@ import HostVanInfo from './pages/Host/HostVanInfo';
 import HostVanPricing from './pages/Host/HostVanPricing';
 import HostVanPhotos from './pages/Host/HostVanPhotos';
 import NotFound from './pages/NotFound';
-import { RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 import Error from './components/Error';
 import Login from './components/Login';
+import { requireAuth } from './Utils';
+import { Navigate } from 'react-router-dom';
 
 
 const router = createBrowserRouter(createRoutesFromElements(
@@ -36,7 +38,9 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route 
     path='vans' 
     element={<Vans />} 
-    loader={vansLoader} />
+    loader={vansLoader}
+    
+     />
 
     <Route 
      path='vans/:id'
@@ -53,26 +57,16 @@ const router = createBrowserRouter(createRoutesFromElements(
 
     <Route path='host' element={<HostLayout />}>
 
-      <Route index 
-      element={<Dashboard />} 
-      loader={async()=>{
-        let isLoggedIn=false
-        if(!isLoggedIn) {
-          return  null
-        }
-        return null
-      }}
+      <Route 
+       index 
+       element={<Dashboard />} 
+       loader={requireAuth}
+       errorElement={<Error />}
       />
       <Route 
         path='income' 
         element={<Income />} 
-        loader={async()=>{
-          let isLoggedIn=false
-          if(!isLoggedIn) {
-            return  null
-          }
-          return null
-        }}
+        loader={async()=>await requireAuth()}
         />
       <Route   
         path='vans' 
@@ -88,46 +82,22 @@ const router = createBrowserRouter(createRoutesFromElements(
         <Route 
           index 
           element={<HostVanInfo />} 
-          loader={async()=>{
-            let isLoggedIn=false
-            if(!isLoggedIn) {
-              return  null
-            }
-            return null
-          }}
+          loader={async()=>await requireAuth()}
           />
         <Route 
           path='pricing' 
           element={<HostVanPricing />} 
-          loader={async()=>{
-            let isLoggedIn=false
-            if(!isLoggedIn) {
-              return  null
-            }
-            return null
-          }}/>
+          loader={async()=>await requireAuth()}/>
         <Route 
           path='photos' 
           element={<HostVanPhotos />} 
-          loader={async()=>{
-            let isLoggedIn=false
-            if(!isLoggedIn) {
-              return  null
-            }
-            return null
-          }}/>
+          loader={async()=>await requireAuth()}/>
 
       </Route>
       <Route 
         path='reviews' 
         element={<Reviews />} 
-        loader={async()=>{
-          let isLoggedIn=false
-          if(!isLoggedIn) {
-            return  null
-          }
-          return null
-        }}/>
+        loader={async()=>await requireAuth()}/>
     </Route>
     <Route path='*' element={<NotFound />} />
   </Route>

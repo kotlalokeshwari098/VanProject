@@ -6,8 +6,9 @@ function Error() {
     console.log(error)
   return (
     <div>
-      <h2>Error:{error.message}</h2>
-      {error.statusText}
+      <h2>Error:
+        {error.message}{error.status}</h2>
+      
     </div>
   )
 }
